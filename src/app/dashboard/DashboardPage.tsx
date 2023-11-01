@@ -5,11 +5,13 @@ import githubLogo from '../../assets/github-mark.png';
 import {searchRepositories, searchUsers } from "../../api/service/GithubService";
 import {GithubRepositoriesPayload} from "../../api/model/response/GithubRepository";
 import {GithubUsersPayload} from "../../api/model/response/GithubUser";
+import { useNavigate } from 'react-router-dom';
 
 const DashboardPage: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [repositorySearchResults, setRepositorySearchResults] = useState<GithubRepositoriesPayload>();
-    const [userSearchResults, setUserSearchResults] = useState<GithubUsersPayload>();
+    const [, setRepositorySearchResults] = useState<GithubRepositoriesPayload>();
+    const [, setUserSearchResults] = useState<GithubUsersPayload>();
+    let navigate = useNavigate();
 
     const handleSearchChange = (newValue: string) => {
         setSearchQuery(newValue);
@@ -29,9 +31,7 @@ const DashboardPage: React.FC = () => {
         console.log('User Search Results: ', userResults);
         setRepositorySearchResults(repoResults);
         setUserSearchResults(userResults);
-        console.log('Repository Search Results saved: ', repositorySearchResults);
-        console.log('User Search Results saved: ', userSearchResults);
-
+        navigate('/results', { state: { repoResults, userResults } });
     };
 
     return (

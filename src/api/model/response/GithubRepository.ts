@@ -10,6 +10,7 @@ export interface GitHubRepository {
     private: boolean;
     html_url: string;
     description: string;
+    stargazers_count:number;
 }
 
 export interface GithubRepositoriesPayload {

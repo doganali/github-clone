@@ -6,6 +6,8 @@ import {
     Navigate,
 } from 'react-router-dom';
 import DashboardPage from './app/dashboard/DashboardPage';
+import SearchResultsPage from './app/search-results/SearchResultsPage';
+
 
 const App: React.FC = () => {
     return (
@@ -14,8 +16,7 @@ const App: React.FC = () => {
                 {/* Define your Route to DashboardPage */}
                 <Route path="/dashboard" element={<DashboardPage/>}/>
 
-                {/* Other routes defined here */}
-                {/* <Route path="/other" element={<OtherComponent />} /> */}
+                <Route path="/results" element={<SearchResultsPage/>} />
 
                 <Route path="/" element={<Navigate replace to="/dashboard"/>}/>
             </Routes>
