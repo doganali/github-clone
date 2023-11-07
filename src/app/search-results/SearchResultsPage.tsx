@@ -111,7 +111,9 @@ const SearchResultsPage: React.FC = () => {
                             description:  "",
                             html_url: user.html_url,
                             avatar_url: user.avatar_url
-                        })) || []}/>
+                        })) || []}
+
+                        />
                     )}
                 </div>
             </div>

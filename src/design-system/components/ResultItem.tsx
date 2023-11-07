@@ -1,4 +1,5 @@
 import React from "react";
+import {useNavigate} from "react-router-dom";
 
 interface ResultItemProps {
     id: number;
@@ -15,6 +16,14 @@ export const ResultItem: React.FC<ResultItemProps> = ({
                                                           html_url,
                                                           avatar_url,
                                                       }) => {
+
+
+    const navigate = useNavigate(); // Hook for navigation
+
+    const handleItemClick = () => {
+        navigate(`/${name}`); // Navigate to user profile page when item is clicked
+    };
+
     const itemStyle: React.CSSProperties = {
         padding: '16px',
         borderBottom: '1px solid #e1e4e8',
@@ -44,12 +53,15 @@ export const ResultItem: React.FC<ResultItemProps> = ({
     return (
         <div style={itemStyle}>
             <img src={avatar_url} alt={`${name} avatar`} style={avatarStyle} />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <a href={html_url} style={titleStyle}>{name}</a> {}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
+                <button onClick={handleItemClick} style={{...titleStyle, background: 'none', border: 'none', padding: 0, cursor: 'pointer'}}>
+                    {name}
+                </button>
                 <div style={descriptionStyle}>{description}</div>
             </div>
         </div>
     );
+
 };
 
 export default ResultItem;
