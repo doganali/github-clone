@@ -84,16 +84,19 @@ const SearchResultsPage: React.FC = () => {
                            placeholder="Search..."/>
             </nav>
             <div style={{display: 'flex'}}>
-                <div style={{minWidth: '200px'}}>
-                    {/* Iterate and create FilterOption components */}
+                {/* Filters section with a title */}
+                <div style={{minWidth: '200px', marginRight: '20px'}}>
+                    <h2 style={{ borderBottom: '1px solid #e1e4e8', padding: '8px', }}>Filter By</h2>
                     <FilterOption name="Repositories" count={repoCount} selected={filter === 'repositories'}
                                   onSelect={() => setFilter('repositories')}/>
                     <FilterOption name="Users" count={userCount} selected={filter === 'users'}
                                   onSelect={() => setFilter('users')}/>
                 </div>
+                <div style={{width: '1px', backgroundColor: '#e1e4e8', marginRight: '20px'}}></div>
                 <div style={{flex: 1}}>
+                    <h2 style={{ borderBottom: '1px solid #e1e4e8', padding: '8px' }}>Results</h2>
                     {filter === 'repositories' ? (
-                        <ResultsList title="Repository Results" items={repoResults?.items.map(repo => ({
+                        <ResultsList items={repoResults?.items.map(repo => ({
                                 id: repo.id,
                                 name: repo.name,
                                 description: repo.description,
@@ -102,10 +105,10 @@ const SearchResultsPage: React.FC = () => {
                             })
                         ) || []}/>
                     ) : (
-                        <ResultsList title="User Results" items={userResults?.items.map(user => ({
+                        <ResultsList items={userResults?.items.map(user => ({
                             id: user.id,
                             name: user.login,
-                            description: "",
+                            description:  "",
                             html_url: user.html_url,
                             avatar_url: user.avatar_url
                         })) || []}/>

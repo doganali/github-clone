@@ -12,14 +12,11 @@ export interface Item {
 }
 
 interface ResultsListProps {
-    title: string;
     items: Item[];
 }
 
-export const ResultsList: React.FC<ResultsListProps> = ({ title, items }) => {
+export const ResultsList: React.FC<ResultsListProps> = ({ items }) => {
     return (
-        <div>
-            <h1 style={{ borderBottom: '1px solid #e1e4e8', paddingBottom: '8px', marginBottom: '16px' }}>{title}</h1>
             <div>
                 {items.map(item => (
                     <ResultItem
@@ -31,7 +28,6 @@ export const ResultsList: React.FC<ResultsListProps> = ({ title, items }) => {
                      id={item.id}/>
                 ))}
             </div>
-        </div>
     );
 };
 
