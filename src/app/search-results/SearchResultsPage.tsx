@@ -1,52 +1,117 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {searchRepositories, searchUsers} from "../../api/service/GithubService";
 import {GithubRepositoriesPayload} from "../../api/model/response/GithubRepository";
 import {GithubUsersPayload} from "../../api/model/response/GithubUser";
+import SearchBar from "../../design-system/components/SearchBar";
+import githubLogo from '../../assets/github-mark.png';
+import FilterOption from "../../design-system/components/FilterOption";
+import ResultsList from "../../design-system/components/ResultsList";
 
 const SearchResultsPage: React.FC = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const [repoResults, setRepoResults] = useState<GithubRepositoriesPayload>();
     const [userResults, setUserResults] = useState<GithubUsersPayload>();
+    const [filter, setFilter] = useState<'repositories' | 'users'>('repositories');
     const [isLoading, setIsLoading] = useState(true);
 
-    const searchTerm = location.state.searchQuery;
+    const initialSearchTerm = location.state.searchQuery;
+
+    const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
     useEffect(() => {
-        console.log('searching: ', searchTerm)
-        if (searchTerm) {
-            setIsLoading(true);
-            Promise.all([
-                searchRepositories(searchTerm),
-                searchUsers(searchTerm),
-            ]).then(([repoResponse, userResponse]) => {
-                setRepoResults(repoResponse);
-                setUserResults(userResponse);
-                setIsLoading(false);
-            });
+        const searchQuery = location.state?.searchQuery || '';
+        setSearchTerm(searchQuery);
+
+        if (searchQuery) {
+            executeSearch();
+        } else {
+            setIsLoading(false);
         }
-    }, [searchTerm]);
+    }, []);
+
+    const executeSearch = () => {
+        console.log('Executing search for:', searchTerm);
+        setIsLoading(true);
+        Promise.all([
+            searchRepositories(searchTerm),
+            searchUsers(searchTerm),
+        ]).then(([repoResponse, userResponse]) => {
+            setRepoResults(repoResponse);
+            setUserResults(userResponse);
+            setIsLoading(false);
+        });
+    };
+
+    const handleSearchTerm = (query: string) => {
+        setSearchTerm(query);
+    };
+
+    const handleLogoClick = () => {
+        navigate('/');
+    };
 
     if (isLoading) {
-        // TODO: implement a loading UI
+        // TODO: implement loading animation or smth. Do not load everything, put skeletion animations on list tiles
         return <div>Loading results...</div>;
     }
 
+    const navBarStyle = {
+        height: '50px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#f8f8f8',
+        padding: '0 20px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    };
+
+
+    const logoStyle = {
+        height: '30px',
+        cursor: 'pointer',
+    };
+
+    const repoCount = repoResults?.total_count || 0;
+    const userCount = userResults?.total_count || 0;
+
     return (
         <div>
-            <h1>Repository Results</h1>
-            <ul>
-                {repoResults?.items.map(repo => (
-                    <li key={repo.id}>{repo.full_name}</li>
-                ))}
-            </ul>
-
-            <h1>User Results</h1>
-            <ul>
-                {userResults?.items.map(user => (
-                    <li key={user.id}>{user.login}</li>
-                ))}
-            </ul>
+            <nav style={navBarStyle}>
+                <img src={githubLogo} alt="Logo" onClick={handleLogoClick} style={logoStyle}/>
+                <SearchBar value={searchTerm} onChange={handleSearchTerm} onSearch={executeSearch}
+                           placeholder="Search..."/>
+            </nav>
+            <div style={{display: 'flex'}}>
+                <div style={{minWidth: '200px'}}>
+                    {/* Iterate and create FilterOption components */}
+                    <FilterOption name="Repositories" count={repoCount} selected={filter === 'repositories'}
+                                  onSelect={() => setFilter('repositories')}/>
+                    <FilterOption name="Users" count={userCount} selected={filter === 'users'}
+                                  onSelect={() => setFilter('users')}/>
+                </div>
+                <div style={{flex: 1}}>
+                    {filter === 'repositories' ? (
+                        <ResultsList title="Repository Results" items={repoResults?.items.map(repo => ({
+                                id: repo.id,
+                                name: repo.name,
+                                description: repo.description,
+                                html_url: repo.html_url,
+                                avatar_url: repo.owner.avatar_url
+                            })
+                        ) || []}/>
+                    ) : (
+                        <ResultsList title="User Results" items={userResults?.items.map(user => ({
+                            id: user.id,
+                            name: user.login,
+                            description: "",
+                            html_url: user.html_url,
+                            avatar_url: user.avatar_url
+                        })) || []}/>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

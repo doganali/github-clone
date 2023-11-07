@@ -6,6 +6,7 @@ export interface GitHubRepository {
     owner: {
         login: string;
         id: number;
+        avatar_url:string;
     };
     private: boolean;
     html_url: string;
