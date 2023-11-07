@@ -1,5 +1,8 @@
 export interface GitHubUser {
     login: string;
+    name:string;
+    bio:string;
+    email:string;
     id: number;
     node_id: string;
     avatar_url: string;

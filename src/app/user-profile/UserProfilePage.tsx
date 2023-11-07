@@ -1,43 +1,43 @@
-import React, {useEffect, useState} from 'react';
-import { GitHubUser } from "../../api/model/response/GithubUser";
-import {useParams} from "react-router-dom";
-import {fetchUserData} from "../../api/service/GithubService";
-
+import React, { useEffect, useState } from 'react';
+import { GitHubUser } from '../../api/model/response/GithubUser';
+import { useParams } from 'react-router-dom';
+import { fetchUserData } from '../../api/service/GithubService';
+import UserDetailColumn from "./components/UserDetailColumn";
+import RepositorySearchBar from "./components/UserRepositorySearchBar";
+import UserTabs from "./components/UserTabs";
 
 const UserProfilePage: React.FC = () => {
-    const { username } = useParams();
+    const { username } = useParams<{ username: string }>();
     const [user, setUserData] = useState<GitHubUser | null>(null);
+    const [repositories, setRepositories] = useState([]);
 
     useEffect(() => {
         if (username) {
             fetchUserData(username)
-                .then(data => {
+                .then((data) => {
                     setUserData(data);
                 })
-                .catch(error => {
-                    // Handle the error case
-                    console.error(`Failed to fetch user data of ${username}:`, error);
+                .catch((error) => {
+                    console.error(`Failed to fetch user data for ${username}:`, error);
                 });
         }
     }, [username]);
 
+    const RepositoriesList = ({ reposUrl }: { reposUrl: string }) => {
+        // carry this into tabs
+        return <div>Repositories List Component</div>;
+    };
+
     if (!user) {
         return <div>Loading...</div>;
     }
+
     return (
-        <div style={{ maxWidth: '800px', margin: 'auto' }}>
-            <section style={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '20px' }}>
-                <img src={user.avatar_url} alt={user.login} style={{ width: '100px', borderRadius: '50%' }} />
-                <div>
-                    <h1>{user.login}</h1>
-                    <p>{user.type}</p>
-                    {/* Additional user info like followers, following, etc. */}
-                </div>
-            </section>
-            <section>
-                <h2>Repositories</h2>
-                {/* The repositories list would be a separate component that takes user.repos_url as a prop */}
-            </section>
+        <div style={{ maxWidth: '1200px', margin: 'auto', display: 'flex', gap: '20px', padding: '20px' }}>
+            <UserDetailColumn user={user} />
+            <div style={{ flex: 2 }}>
+                <UserTabs reposUrl={user.repos_url} />
+            </div>
         </div>
     );
 };
