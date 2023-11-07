@@ -98,7 +98,7 @@ const SearchResultsPage: React.FC = () => {
                     {filter === 'repositories' ? (
                         <ResultsList items={repoResults?.items.map(repo => ({
                                 id: repo.id,
-                                name: repo.name,
+                                name: repo.full_name,
                                 description: repo.description,
                                 html_url: repo.html_url,
                                 avatar_url: repo.owner.avatar_url

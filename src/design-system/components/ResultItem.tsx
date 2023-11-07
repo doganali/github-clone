@@ -18,10 +18,10 @@ export const ResultItem: React.FC<ResultItemProps> = ({
                                                       }) => {
 
 
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate();
 
     const handleItemClick = () => {
-        navigate(`/${name}`); // Navigate to user profile page when item is clicked
+        navigate(`/${name}`);
     };
 
     const itemStyle: React.CSSProperties = {
@@ -61,7 +61,6 @@ export const ResultItem: React.FC<ResultItemProps> = ({
             </div>
         </div>
     );
-
 };
 
 export default ResultItem;

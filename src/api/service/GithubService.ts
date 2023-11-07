@@ -1,10 +1,12 @@
-import {GithubUsersPayload} from "../model/response/GithubUser";
+import {GitHubUser, GithubUsersPayload} from "../model/response/GithubUser";
 import {GithubRepositoriesPayload} from "../model/response/GithubRepository";
 
 const GITHUB_REPOSITORIES_API_URL = 'https://api.github.com/search/repositories';
-const GITHUB_USERS_API_URL = 'https://api.github.com/search/users';
+const GITHUB_USERS_SEARCH_API_URL = 'https://api.github.com/search/users';
+const GITHUB_USERS_API_URL = 'https://api.github.com/users';
 
-// TODO: Implement authentication? works without it somehow?
+
+// TODO: Implement authentication? it works when you already logged in the browser..
 
 export const searchRepositories = async (
     query: string,
@@ -51,7 +53,7 @@ export const searchUsers = async (
         per_page: perPage.toString(),
     });
 
-    const response = await fetch(`${GITHUB_USERS_API_URL}?${queryParams}`, {
+    const response = await fetch(`${GITHUB_USERS_SEARCH_API_URL}?${queryParams}`, {
         headers: {
             Accept: 'application/vnd.github.v3.text-match+json',
         },
@@ -59,6 +61,21 @@ export const searchUsers = async (
 
     if (!response.ok) {
         throw new Error(`GitHub users API responded with status ${response.status}`);
+    }
+
+    return await response.json();
+};
+
+export const fetchUserData = async (username: string): Promise<GitHubUser | null> => {
+    const headers = new Headers({
+        'Accept': 'application/vnd.github+json',
+        // 'Authorization': `Bearer ${token}`,
+    });
+
+    const response = await fetch(`${GITHUB_USERS_API_URL}/${username}`, {headers});
+
+    if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
     }
 
     return await response.json();

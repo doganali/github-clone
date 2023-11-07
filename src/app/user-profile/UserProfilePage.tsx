@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { GitHubUser } from "../../api/model/response/GithubUser";
-import {useLocation, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {fetchUserData} from "../../api/service/GithubService";
 
 
 const UserProfilePage: React.FC = () => {
@@ -9,14 +10,14 @@ const UserProfilePage: React.FC = () => {
 
     useEffect(() => {
         if (username) {
-            // fetchUserData(username)
-            //     .then(data => {
-            //         setUserData(data);
-            //     })
-            //     .catch(error => {
-            //         // Handle the error case
-            //         console.error('Failed to fetch user data:', error);
-            //     });
+            fetchUserData(username)
+                .then(data => {
+                    setUserData(data);
+                })
+                .catch(error => {
+                    // Handle the error case
+                    console.error(`Failed to fetch user data of ${username}:`, error);
+                });
         }
     }, [username]);
 
