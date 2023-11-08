@@ -6,25 +6,31 @@ const GITHUB_USERS_SEARCH_API_URL = 'https://api.github.com/search/users';
 const GITHUB_USERS_API_URL = 'https://api.github.com/users';
 
 
-// TODO: Implement authentication? it works when you already logged in the browser..
+// TODO: Implement authentication? it works for now (when you already logged in the browser..)
 
 export const searchRepositories = async (
     query: string,
+    language?: string,
+    user?: string,
+    type?: string,
     sort: string = 'stars',
     order: 'asc' | 'desc' = 'desc',
     page: number = 1,
-    perPage: number = 30
+    perPage: number = 30,
 ): Promise<GithubRepositoriesPayload> => {
 
+    const queryString = encodeURIComponent(`q=${query} user:${user}`);
 
+    // console.log(`encoded: ${encodedQuery}`)
     const queryParams = new URLSearchParams({
-        q: query,
+        q: queryString,
         sort,
         order,
         page: page.toString(),
         per_page: perPage.toString(),
     });
 
+    console.log(`Fetching: ${GITHUB_REPOSITORIES_API_URL}?${queryParams}`);
     const response = await fetch(`${GITHUB_REPOSITORIES_API_URL}?${queryParams}`, {
         headers: {
             Accept: 'application/vnd.github+json'
@@ -35,7 +41,9 @@ export const searchRepositories = async (
         throw new Error(`GitHub repositories API responded with status ${response.status}`);
     }
 
-    return await response.json();
+    const result: GithubRepositoriesPayload = await response.json();
+    console.log(`results: ${result.items.length}`)
+    return result
 };
 
 export const searchUsers = async (

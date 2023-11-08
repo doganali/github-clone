@@ -1,29 +1,33 @@
-import React, { useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import {HiOutlineBookOpen} from "react-icons/hi";
 import {RiGitRepositoryLine} from "react-icons/ri";
 import {IoStatsChartOutline} from "react-icons/io5";
 
-// import RepositorySearchBar from "./UserRepositorySearchBar";
+import RepositorySearchBar from "./UserRepositorySearchBar";
+import {GithubRepositoriesPayload} from "../../../api/model/response/GithubRepository";
+import ResultsList from "../../../design-system/components/ResultsList";
 
 interface UserTabsProps {
+    username:string,
     reposUrl: string;
 }
 
-const UserTabs: React.FC<UserTabsProps> = ({ reposUrl }) => {
+const UserTabs: React.FC<UserTabsProps> = ({username, reposUrl}) => {
     const [activeTab, setActiveTab] = useState('repositories');
     const [hoverTab, setHoverTab] = useState<string | null>(null);
+    const [reposSearchResults, setReposSearchResults] = useState<GithubRepositoriesPayload | null>(null);
 
     const icons = {
-        overview: <HiOutlineBookOpen />,
-        repositories: <RiGitRepositoryLine />,
-        projects: <IoStatsChartOutline />,
+        overview: <HiOutlineBookOpen/>,
+        repositories: <RiGitRepositoryLine/>,
+        projects: <IoStatsChartOutline/>,
     };
 
     const tabContainerStyle = {
         display: 'flex',
         borderBottom: '1px solid #ddd',
         paddingLeft: '16px',
-        paddingTop:'8px',
+        paddingTop: '8px',
     };
 
     const tabStyle = (tabName: string) => ({
@@ -36,6 +40,10 @@ const UserTabs: React.FC<UserTabsProps> = ({ reposUrl }) => {
         borderTopLeftRadius: '8px',
         borderTopRightRadius: '8px',
     });
+
+    const handleSearch = useCallback((results: GithubRepositoriesPayload) => {
+        setReposSearchResults(results);
+    }, []);
 
     return (
         <div>
@@ -53,7 +61,20 @@ const UserTabs: React.FC<UserTabsProps> = ({ reposUrl }) => {
                 ))}
             </div>
             <div>
-                {/* Tab content */}
+                {activeTab === 'repositories' && (
+                    <div>
+                        <RepositorySearchBar username={username} reposUrl={reposUrl} onSearch={handleSearch}/>
+                        <ResultsList items= {
+                            reposSearchResults?.items.map(repo => ({
+                                id: repo.id,
+                                name: repo.full_name,
+                                description: repo.description,
+                                html_url: repo.html_url,
+                                avatar_url: repo.owner.avatar_url
+                            })
+                        ) || []}/>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -48,6 +48,13 @@ export const ResultItem: React.FC<ResultItemProps> = ({
         fontSize: '14px',
         color: '#586069',
         marginTop: '4px',
+        overflow: 'hidden',
+        display: '-webkit-box',
+        WebkitBoxOrient: 'vertical',
+        maxWidth: '100%',
+        WebkitLineClamp: 2,
+        textOverflow: 'ellipsis',
+        boxSizing: 'border-box'
     };
 
     return (

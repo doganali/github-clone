@@ -31,13 +31,12 @@ const UserProfilePage: React.FC = () => {
     if (!user) {
         return <div>Loading...</div>;
     }
-
     return (
         <div style={{ margin: 'auto', display: 'flex', gap: '20px', padding: '20px' }}>
             <UserDetailColumn user={user} />
             {/*<div style={{width: '1px', backgroundColor: '#e1e4e8', marginRight: '20px'}}></div>*/}
             <div style={{ flex: 2 }}>
-                <UserTabs reposUrl={user.repos_url} />
+                <UserTabs username={user.login} reposUrl={user.repos_url} />
             </div>
         </div>
     );
