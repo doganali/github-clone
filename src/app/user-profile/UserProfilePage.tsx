@@ -33,8 +33,9 @@ const UserProfilePage: React.FC = () => {
     }
 
     return (
-        <div style={{ maxWidth: '1200px', margin: 'auto', display: 'flex', gap: '20px', padding: '20px' }}>
+        <div style={{ margin: 'auto', display: 'flex', gap: '20px', padding: '20px' }}>
             <UserDetailColumn user={user} />
+            {/*<div style={{width: '1px', backgroundColor: '#e1e4e8', marginRight: '20px'}}></div>*/}
             <div style={{ flex: 2 }}>
                 <UserTabs reposUrl={user.repos_url} />
             </div>

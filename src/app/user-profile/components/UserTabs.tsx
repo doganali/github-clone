@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import RepositorySearchBar from "./UserRepositorySearchBar";
+import {HiOutlineBookOpen} from "react-icons/hi";
+import {RiGitRepositoryLine} from "react-icons/ri";
+import {IoStatsChartOutline} from "react-icons/io5";
+
+// import RepositorySearchBar from "./UserRepositorySearchBar";
 
 interface UserTabsProps {
     reposUrl: string;
@@ -7,32 +11,49 @@ interface UserTabsProps {
 
 const UserTabs: React.FC<UserTabsProps> = ({ reposUrl }) => {
     const [activeTab, setActiveTab] = useState('repositories');
+    const [hoverTab, setHoverTab] = useState<string | null>(null);
+
+    const icons = {
+        overview: <HiOutlineBookOpen />,
+        repositories: <RiGitRepositoryLine />,
+        projects: <IoStatsChartOutline />,
+    };
+
+    const tabContainerStyle = {
+        display: 'flex',
+        borderBottom: '1px solid #ddd',
+        paddingLeft: '16px',
+        paddingTop:'8px',
+    };
+
+    const tabStyle = (tabName: string) => ({
+        padding: '10px 20px',
+        cursor: 'pointer',
+        borderBottom: activeTab === tabName ? '2px solid orange' : 'none',
+        fontWeight: activeTab === tabName ? 'bold' : 'normal',
+        maxWidth: '150px',
+        backgroundColor: hoverTab === tabName && activeTab !== tabName ? '#f5f5f5' : 'transparent',
+        borderTopLeftRadius: '8px',
+        borderTopRightRadius: '8px',
+    });
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                <button onClick={() => setActiveTab('overview')}>Overview</button>
-                <button onClick={() => setActiveTab('repositories')}>Repositories</button>
-                <button onClick={() => setActiveTab('projects')}>Projects</button>
+            <div style={tabContainerStyle}>
+                {Object.entries(icons).map(([tabName, icon]) => (
+                    <div
+                        key={tabName}
+                        style={tabStyle(tabName)}
+                        onClick={() => setActiveTab(tabName)}
+                        onMouseEnter={() => setHoverTab(tabName)}
+                        onMouseLeave={() => setHoverTab(null)}
+                    >
+                        {icon} {tabName.charAt(0).toUpperCase() + tabName.slice(1)}
+                    </div>
+                ))}
             </div>
             <div>
-                {activeTab === 'overview' && (
-                    <div>
-                        {/* Overview content */}
-                    </div>
-                )}
-                {activeTab === 'repositories' && (
-                    <div>
-                        <RepositorySearchBar /* Pass needed props */ />
-                        {/*<RepositoriesList reposUrl={reposUrl} />*/}
-                        {/*use the same component with main search?*/}
-                    </div>
-                )}
-                {activeTab === 'projects' && (
-                    <div>
-                        {/* Projects content */}
-                    </div>
-                )}
+                {/* Tab content */}
             </div>
         </div>
     );

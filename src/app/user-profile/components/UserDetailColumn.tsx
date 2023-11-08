@@ -22,20 +22,22 @@ const UserDetailColumn: React.FC<UserDetailColumnProps> = ({user}) => {
         },
         followButton: {
             width: '100%',
-            margin: '10px 0',
-            padding: '10px',
-            borderRadius: '20px',
+            marginBottom: '10px 0',
+            padding: '8px',
+            borderRadius: '8px',
             boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
             border: 'none',
             cursor: 'pointer',
-            backgroundColor: '#9b9a9a',
+            backgroundColor: '#eae8e8',
             color: 'black'
         },
         statsRow: {
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'start',
             width: '100%',
-            marginBottom: '10px'
+            marginBottom: '10px',
+            fontSize:'12px',
+            paddingTop:'12px'
         },
         stat: {
             margin: '0 5px',
