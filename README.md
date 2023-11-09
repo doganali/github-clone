@@ -55,8 +55,12 @@ styling guides:
       e.g., `FilterOption` since it is only used in `SearchResultsPage`)
     - Inside `app` layer, there are modules corresponding the pages in the
       project: `dashboard`, `search-results`, `user-profile`.
+- State Management
+  - Current state management with `useState` and `useEffect` can be cumbersome for larger applications, even in this applicaiton.
+  - We could consider using global state management libraries for better scalability and maintainability such as **Redux**, **MobX**, or **Recoil**.
+  - Using these libraries can help avoid prop drilling, simplify state logic, and enhance the maintainability of your codebase.
 - Api Service
-    - Api service has the most potention for improvement:
+    - Api service has a great potential for improvement:
         1. Implement authentication for increased rate limits and access to more features. Currently, the service works
            if the user has logged in through the browser, but authenticated requests would allow for better scalability
            and reliability.
