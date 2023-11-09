@@ -8,11 +8,11 @@ The project contains three main pages:
 
 - Simple dashboard with a search bar:
 
-![Screenshot 2023-11-09 at 16.37.15.png](screen-shots/Screenshot 2023-11-09 at 17.11.20.png)
+![Screenshot 2023-11-09 at 17.11.20.png](screen-shots%2FScreenshot%202023-11-09%20at%2017.11.20.png)
 
 - Search results in Repository and User scope:
 
-![Screenshot 2023-11-09 at 16.37.27.png](screen-shots/Screenshot 2023-11-09 at 17.11.41.png)
+![Screenshot 2023-11-09 at 17.11.41.png](screen-shots%2FScreenshot%202023-11-09%20at%2017.11.41.png)
 
 - User profile with their repos and further information:
 
