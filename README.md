@@ -25,14 +25,12 @@ corresponding places as in the below example:
 
 Some of the important components are also documented in the comments:
 
-![Screenshot 2023-11-09 at 16.48.13.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fst%2Fj6tj35vj2fsgbcy6tg2k98th0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_ljhdQ2%2FScreenshot%202023-11-09%20at%2016.48.13.png)
+![Screenshot 2023-11-09 at 17.15.31.png](screen-shots%2FScreenshot%202023-11-09%20at%2017.15.31.png)
 
 Not all pages follow the conventions due to time constraints. SearchResultsPage is the only page that follows the
 styling guides:
 
-![Screenshot 2023-11-09 at 16.49.07.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fst%2Fj6tj35vj2fsgbcy6tg2k98th0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_k0aoSX%2FScreenshot%202023-11-09%20at%2016.49.07.png)
-
-![Screenshot 2023-11-09 at 16.49.25.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fst%2Fj6tj35vj2fsgbcy6tg2k98th0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_vXHc9c%2FScreenshot%202023-11-09%20at%2016.49.25.png)
+![Screenshot 2023-11-09 at 17.15.45.png](screen-shots%2FScreenshot%202023-11-09%20at%2017.15.45.png)
 
 ## Future Improvements
 
@@ -45,13 +43,12 @@ styling guides:
 - **Pagination** is missing for all the search calls. It is a vital improvement for a real life project for a better UX and Engineering.
 - **Repository and User search result list tiles** have very few information: stars, languages and mroe data can be
   added:
-  ![Screenshot 2023-11-09 at 16.53.56.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fst%2Fj6tj35vj2fsgbcy6tg2k98th0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_EtmCB4%2FScreenshot%202023-11-09%20at%2016.53.56.png)
-
+![Screenshot 2023-11-09 at 17.16.06.png](screen-shots%2FScreenshot%202023-11-09%20at%2017.16.06.png)
 # Code Improvements
 
 - File Structure
     - I have tried to follow a file structure convention as below:
-      ![Screenshot 2023-11-09 at 16.55.24.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fst%2Fj6tj35vj2fsgbcy6tg2k98th0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_lf6SWX%2FScreenshot%202023-11-09%20at%2016.55.24.png)
+  ![Screenshot 2023-11-09 at 17.16.25.png](screen-shots%2FScreenshot%202023-11-09%20at%2017.16.25.png)
       There are three main layers: `app`, `api` and `design-system` for the corresponding layers of the
       project. `design-system` component is the most immature one as it does not contain all the components and some of
       the components actually should not be in this folder, rather they should be in the corresponding app module (
