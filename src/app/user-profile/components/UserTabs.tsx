@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {HiOutlineBookOpen} from "react-icons/hi";
 import {RiGitRepositoryLine} from "react-icons/ri";
 import {IoStatsChartOutline} from "react-icons/io5";
@@ -6,9 +6,10 @@ import {IoStatsChartOutline} from "react-icons/io5";
 import RepositorySearchBar from "./UserRepositorySearchBar";
 import {GithubRepositoriesPayload} from "../../../api/model/response/GithubRepository";
 import ResultsList from "../../../design-system/components/ResultsList";
+import resultsList from "../../../design-system/components/ResultsList";
 
 interface UserTabsProps {
-    username:string,
+    username: string,
     reposUrl: string;
 }
 
@@ -16,7 +17,6 @@ const UserTabs: React.FC<UserTabsProps> = ({username, reposUrl}) => {
     const [activeTab, setActiveTab] = useState('repositories');
     const [hoverTab, setHoverTab] = useState<string | null>(null);
     const [reposSearchResults, setReposSearchResults] = useState<GithubRepositoriesPayload | null>(null);
-
     const icons = {
         overview: <HiOutlineBookOpen/>,
         repositories: <RiGitRepositoryLine/>,
@@ -60,19 +60,24 @@ const UserTabs: React.FC<UserTabsProps> = ({username, reposUrl}) => {
                     </div>
                 ))}
             </div>
+
             <div>
                 {activeTab === 'repositories' && (
                     <div>
                         <RepositorySearchBar username={username} reposUrl={reposUrl} onSearch={handleSearch}/>
-                        <ResultsList items= {
+
+                        {/* loading can be added here for a better ux*/}
+                        <ResultsList items={
                             reposSearchResults?.items.map(repo => ({
-                                id: repo.id,
-                                name: repo.full_name,
-                                description: repo.description,
-                                html_url: repo.html_url,
-                                avatar_url: repo.owner.avatar_url
-                            })
-                        ) || []}/>
+                                    id: repo.id,
+                                    name: repo.full_name,
+                                    description: repo.description,
+                                    html_url: repo.html_url,
+                                    avatar_url: repo.owner.avatar_url
+                                })
+                            ) || []
+                        }/>
+
                     </div>
                 )}
             </div>

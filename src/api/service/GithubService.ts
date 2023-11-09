@@ -12,26 +12,33 @@ export const searchRepositories = async (
     query: string,
     language?: string,
     user?: string,
-    type?: string,
+    type?: string, // is not used at the moment
     sort: string = 'stars',
     order: 'asc' | 'desc' = 'desc',
     page: number = 1,
     perPage: number = 30,
 ): Promise<GithubRepositoriesPayload> => {
 
-    const queryString = encodeURIComponent(`q=${query} user:${user}`);
+    let queryString =`q=${query}`;
 
-    // console.log(`encoded: ${encodedQuery}`)
-    const queryParams = new URLSearchParams({
-        q: queryString,
-        sort,
-        order,
-        page: page.toString(),
-        per_page: perPage.toString(),
-    });
+    if (user) {
+        queryString += encodeURIComponent(` user:${user}`)
+    }
 
-    console.log(`Fetching: ${GITHUB_REPOSITORIES_API_URL}?${queryParams}`);
-    const response = await fetch(`${GITHUB_REPOSITORIES_API_URL}?${queryParams}`, {
+    if (language) {
+        queryString += encodeURIComponent(` language:${language}`)
+    }
+    console.log(`encoded: ${queryString}`)
+    // const queryParams = new URLSearchParams({
+    //     q: queryString,
+    //     sort,
+    //     order,
+    //     page: page.toString(),
+    //     per_page: perPage.toString(),
+    // });
+
+    // console.log(`Fetching: ${GITHUB_REPOSITORIES_API_URL}?${queryParams}`);
+    const response = await fetch(`${GITHUB_REPOSITORIES_API_URL}?${queryString}`, {
         headers: {
             Accept: 'application/vnd.github+json'
         },

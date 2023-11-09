@@ -3,10 +3,9 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {searchRepositories, searchUsers} from "../../api/service/GithubService";
 import {GithubRepositoriesPayload} from "../../api/model/response/GithubRepository";
 import {GithubUsersPayload} from "../../api/model/response/GithubUser";
-import SearchBar from "../../design-system/components/SearchBar";
-import githubLogo from '../../assets/github-mark.png';
 import FilterOption from "../../design-system/components/FilterOption";
 import ResultsList from "../../design-system/components/ResultsList";
+import GithubNavbar from "../../design-system/components/Navbar";
 
 const SearchResultsPage: React.FC = () => {
     const navigate = useNavigate();
@@ -78,11 +77,12 @@ const SearchResultsPage: React.FC = () => {
 
     return (
         <div>
-            <nav style={navBarStyle}>
-                <img src={githubLogo} alt="Logo" onClick={handleLogoClick} style={logoStyle}/>
-                <SearchBar value={searchTerm} onChange={handleSearchTerm} onSearch={executeSearch}
-                           placeholder="Search..."/>
-            </nav>
+            <GithubNavbar
+                searchTerm={searchTerm}
+                onSearchTermChange={handleSearchTerm}
+                onSearchExecute={executeSearch}
+                onLogoClick={handleLogoClick}
+            />
             <div style={{display: 'flex'}}>
                 {/* Filters section with a title */}
                 <div style={{minWidth: '200px', marginRight: '20px'}}>

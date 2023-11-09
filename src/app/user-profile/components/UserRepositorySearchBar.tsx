@@ -19,12 +19,12 @@ const RepositorySearchBar: React.FC<RepositorySearchBarProps> = ({username, repo
         _.debounce((query: string) => {
             console.log('Search for:', query, 'with type:', typeFilter, 'and language:', languageFilter);
 
-            searchRepositories(query, languageFilter, username)
+            searchRepositories(query, languageFilter, username, typeFilter)
                 .then(data => {
-                    onSearch(data); // Assuming the results are in data.items
+                    onSearch(data);
                 });
-        }, 1000),
-        [typeFilter, languageFilter] // Recreate the debounce function if these values change
+        }, 500),
+        [typeFilter, languageFilter]
     );
 
     useEffect(() => {
