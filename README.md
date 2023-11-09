@@ -8,20 +8,20 @@ The project contains three main pages:
 
 - Simple dashboard with a search bar:
 
-![Screenshot 2023-11-09 at 16.37.15.png](..%2F..%2FDesktop%2FScreenshot%202023-11-09%20at%2016.37.15.png)
+![Screenshot 2023-11-09 at 16.37.15.png](screen-shots/Screenshot 2023-11-09 at 17.11.20.png)
 
 - Search results in Repository and User scope:
 
-![Screenshot 2023-11-09 at 16.37.27.png](..%2F..%2FDesktop%2FScreenshot%202023-11-09%20at%2016.37.27.png)
+![Screenshot 2023-11-09 at 16.37.27.png](screen-shots/Screenshot 2023-11-09 at 17.11.41.png)
 
 - User profile with their repos and further information:
 
-![Screenshot 2023-11-09 at 16.37.35.png](..%2F..%2FDesktop%2FScreenshot%202023-11-09%20at%2016.37.35.png)
+![Screenshot 2023-11-09 at 17.11.56.png](screen-shots%2FScreenshot%202023-11-09%20at%2017.11.56.png)
 
 There are many improvements that can be made in the pages in terms of UX which are explained in the comments in
 corresponding places as in the below example:
 
-![Screenshot 2023-11-09 at 16.41.24.png](..%2F..%2FDesktop%2FScreenshot%202023-11-09%20at%2016.41.24.png)
+![Screenshot 2023-11-09 at 17.12.12.png](screen-shots%2FScreenshot%202023-11-09%20at%2017.12.12.png)
 
 Some of the important components are also documented in the comments:
 
