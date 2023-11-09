@@ -41,8 +41,7 @@ styling guides:
 - **Loading state management** is one of the most important UX improvement that I can made. They are mostly just a text
   and sets the entire page into loading. Skeleton animations or similar loading animations are definitely needed for a
   better ux
-- **Design System** is mostly missing. Text styles, coloring, main components such as Navbars, Rows, List tiles can be
-  extracted in a design system folder and used across the project
+- **Design System** is mostly missing. Text styles, coloring, main components such as `Navbars`, `Rows`, `List tiles` can be extracted in a design system folder and used across the project
 - **Pagination** is missing for all the search calls. It is a vital improvement for a real life project for a better UX and Engineering.
 - **Repository and User search result list tiles** have very few information: stars, languages and mroe data can be
   added:
