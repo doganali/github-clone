@@ -1,0 +1,38 @@
+/* SearchResultsPage.css */
+
+/* Styles for the filter and results container */
+.filter-and-results-container {
+    display: flex;
+}
+
+/* Styles for the filters section */
+.filters-section {
+    min-width: 200px;
+    margin-right: 20px;
+}
+
+/* Styles for filter titles */
+.filters-section h2 {
+    border-bottom: 1px solid #e1e4e8;
+    padding: 8px;
+}
+
+/* Styles for the divider between filters and results */
+.results-divider {
+    width: 1px;
+    background-color: #e1e4e8;
+    margin-right: 20px;
+}
+
+/* Styles for the results section */
+.results-section {
+    flex: 1;
+}
+
+/* Styles for results titles */
+.results-section h2 {
+    border-bottom: 1px solid #e1e4e8;
+    padding: 8px;
+}
+
+/* This assumes that the GithubNavbar will have its own styles from the design system */

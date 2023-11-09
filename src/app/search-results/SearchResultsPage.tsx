@@ -1,3 +1,5 @@
+import './SearchResultsPage.css';
+
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {searchRepositories, searchUsers} from "../../api/service/GithubService";
@@ -7,6 +9,11 @@ import FilterOption from "../../design-system/components/FilterOption";
 import ResultsList from "../../design-system/components/ResultsList";
 import GithubNavbar from "../../design-system/components/Navbar";
 
+/**
+ * A component that displays the search results for repositories and users.
+ * It allows users to filter the search results based on the category and
+ * provides navigation to different parts of the application.
+ */
 const SearchResultsPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -14,9 +21,7 @@ const SearchResultsPage: React.FC = () => {
     const [userResults, setUserResults] = useState<GithubUsersPayload>();
     const [filter, setFilter] = useState<'repositories' | 'users'>('repositories');
     const [isLoading, setIsLoading] = useState(true);
-
     const initialSearchTerm = location.state.searchQuery;
-
     const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
     useEffect(() => {
@@ -28,10 +33,12 @@ const SearchResultsPage: React.FC = () => {
         } else {
             setIsLoading(false);
         }
-    }, []);
+    }, [location.state?.searchQuery]);
 
+    /**
+     * Executes the search for both repositories and users based on the searchTerm.
+     */
     const executeSearch = () => {
-        console.log('Executing search for:', searchTerm);
         setIsLoading(true);
         Promise.all([
             searchRepositories(searchTerm),
@@ -43,37 +50,32 @@ const SearchResultsPage: React.FC = () => {
         });
     };
 
+    /**
+     * Updates the searchTerm state when the search term is changed in the search bar.
+     * @param {string} query - The new search term.
+     */
     const handleSearchTerm = (query: string) => {
         setSearchTerm(query);
     };
 
+    /**
+     * Navigates to the home page when the GitHub logo is clicked.
+     */
     const handleLogoClick = () => {
         navigate('/');
     };
 
     if (isLoading) {
-        // TODO: implement loading animation or smth. Do not load everything, put skeletion animations on list tiles
+        // Loading state needs a better UX implementation.
+        // TODO: Implement skeleton screens for each result item.
         return <div>Loading results...</div>;
     }
 
-    const navBarStyle = {
-        height: '50px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: '#f8f8f8',
-        padding: '0 20px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    };
-
-
-    const logoStyle = {
-        height: '30px',
-        cursor: 'pointer',
-    };
-
     const repoCount = repoResults?.total_count || 0;
     const userCount = userResults?.total_count || 0;
+
+    // Inline styles removed for readability and maintainability, not all pages followed this convention due to time constraints
+    // Styles should be placed in CSS/SCSS files and applied using class names.
 
     return (
         <div>
@@ -83,39 +85,44 @@ const SearchResultsPage: React.FC = () => {
                 onSearchExecute={executeSearch}
                 onLogoClick={handleLogoClick}
             />
-            <div style={{display: 'flex'}}>
-                {/* Filters section with a title */}
-                <div style={{minWidth: '200px', marginRight: '20px'}}>
-                    <h2 style={{ borderBottom: '1px solid #e1e4e8', padding: '8px', }}>Filter By</h2>
-                    <FilterOption name="Repositories" count={repoCount} selected={filter === 'repositories'}
-                                  onSelect={() => setFilter('repositories')}/>
-                    <FilterOption name="Users" count={userCount} selected={filter === 'users'}
-                                  onSelect={() => setFilter('users')}/>
-                </div>
-                <div style={{width: '1px', backgroundColor: '#e1e4e8', marginRight: '20px'}}></div>
-                <div style={{flex: 1}}>
-                    <h2 style={{ borderBottom: '1px solid #e1e4e8', padding: '8px' }}>Results</h2>
-                    {filter === 'repositories' ? (
-                        <ResultsList items={repoResults?.items.map(repo => ({
-                                id: repo.id,
-                                name: repo.full_name,
-                                description: repo.description,
-                                html_url: repo.html_url,
-                                avatar_url: repo.owner.avatar_url
-                            })
-                        ) || []}/>
-                    ) : (
-                        <ResultsList items={userResults?.items.map(user => ({
+            <div className="filter-and-results-container">
+                <aside className="filters-section">
+                    <h2>Filter By</h2>
+                    <FilterOption
+                        name="Repositories"
+                        count={repoCount}
+                        selected={filter === 'repositories'}
+                        onSelect={() => setFilter('repositories')}
+                    />
+                    <FilterOption
+                        name="Users"
+                        count={userCount}
+                        selected={filter === 'users'}
+                        onSelect={() => setFilter('users')}
+                    />
+                </aside>
+                <div className="results-divider"></div>
+                <main className="results-section">
+                    <h2>Results</h2>
+                    {/* Conditional rendering based on the selected filter */}
+                    <ResultsList items={filter === 'repositories' ?
+                        (repoResults?.items.map(repo => ({
+                            id: repo.id,
+                            name: repo.full_name,
+                            description: repo.description,
+                            html_url: repo.html_url,
+                            avatar_url: repo.owner.avatar_url
+                        })) || []) :
+                        (userResults?.items.map(user => ({
                             id: user.id,
                             name: user.login,
-                            description:  "",
+                            description: "",
                             html_url: user.html_url,
                             avatar_url: user.avatar_url
-                        })) || []}
-
-                        />
-                    )}
-                </div>
+                        })) || [])
+                    }
+                    />
+                </main>
             </div>
         </div>
     );
